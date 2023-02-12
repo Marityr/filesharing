@@ -25,13 +25,13 @@ func runHttp(srv *filesharing.Server) {
 		}
 	}()
 
-	log.Println("BonusApp Started")
+	log.Println("App Started")
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
 	<-quit
 
-	log.Println("BonusApp Shutting Down")
+	log.Println("App Down")
 
 	if err := srv.Shutdown(context.Background()); err != nil {
 		log.Printf("error occured on server shutting down: %s", err.Error())

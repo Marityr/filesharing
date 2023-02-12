@@ -10,7 +10,7 @@ import (
 )
 
 func TestHelloMessage(t *testing.T) {
-	t.Run("query param empry", func(t *testing.T) {
+	t.Run("failed param", func(t *testing.T) {
 		e := echo.New()
 		q := make(url.Values)
 		q.Set("id", "")
@@ -23,7 +23,18 @@ func TestHelloMessage(t *testing.T) {
 
 		assertQueryParam(t, response.Code, http.StatusBadRequest)
 	})
-	t.Run("query param vaalued", func(t *testing.T) {
+	t.Run("empty param", func(t *testing.T) {
+		e := echo.New()
+		request, _ := http.NewRequest(http.MethodGet, "/", nil)
+		response := httptest.NewRecorder()
+
+		c := e.NewContext(request, response)
+
+		HelloMessage(c)
+
+		assertQueryParam(t, response.Code, http.StatusBadRequest)
+	})
+	t.Run("valid param", func(t *testing.T) {
 		e := echo.New()
 		q := make(url.Values)
 		q.Set("id", "test")
